@@ -83,3 +83,4 @@ if __name__ == '__main__':
                                    test_case['tourists'], test_case['graph'])
         print('Scenario #{}'.format(test_id))
         print('Minimum Number of Trips = {}'.format(travels))
+        print
