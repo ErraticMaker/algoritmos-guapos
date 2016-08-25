@@ -550,14 +550,27 @@ def output_formatter(n_val, m_val, divides):
     else:
         return '{} does not divide {}!'.format(m_val, n_val)
 
+def solve(m_factors, n_val):
+    for alpha, beta in m_factors.items():
+        k  = 0
+        for p in range(1, beta + 1):
+            k_p = n_val // alpha**p
+            if k_p == 0:
+                break
+            k += k_p
+            if k > beta:
+                break
+        if k < beta:
+            return False
+    return True
 
 def main():
     """Main"""
     results = parse_input(sys.argv[1])
     for n_val, m_val in results:
         m_factors = factorize(m_val)
-        print(m_factors)
-        print(output_formatter(n_val, m_val, False))
+        result = solve(m_factors, n_val)
+        print(output_formatter(n_val, m_val, result))
 
 
 if __name__ == '__main__':
