@@ -4,7 +4,8 @@
 # Factovisors problem
 URL: https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=35&page=show_problem&problem=1080
 
-The Factorial function, `n!` is defined thus for `n` a non-negative integer:
+The Factorial function, `n!` is defined thus for `n` a non-negative
+integer:
 
 ```math
     0! = 1
@@ -24,8 +25,8 @@ non-integers, `n` and `m`, both less than `2^31`.
 
 ## Output
 
-For each input line, output a line stating whether or not `m` divides `n!` in
-the format shown below.
+For each input line, output a line stating whether or not `m` divides
+`n!` in the format shown below.
 
 ## Sample Input
 
@@ -550,11 +551,17 @@ def output_formatter(n_val, m_val, divides):
     else:
         return '{} does not divide {}!'.format(m_val, n_val)
 
-def solve(m_factors, n_val):
+
+def check_factorial_divisibility(n_val, m_val):
+    """Checks the divisibility of `n_val!` by `m_val`"""
+    # Factorize m_val
+    m_factors = factorize(m_val)
+    # For every prime factor in m_val find if `n_val!` has enough prime
+    # factors to allow divisibility
     for alpha, beta in m_factors.items():
-        k  = 0
-        for p in range(1, beta + 1):
-            k_p = n_val // alpha**p
+        k = 0
+        for power in range(1, beta + 1):
+            k_p = n_val // alpha**power
             if k_p == 0:
                 break
             k += k_p
@@ -564,12 +571,12 @@ def solve(m_factors, n_val):
             return False
     return True
 
+
 def main():
     """Main"""
     results = parse_input(sys.argv[1])
     for n_val, m_val in results:
-        m_factors = factorize(m_val)
-        result = solve(m_factors, n_val)
+        result = check_factorial_divisibility(n_val, m_val)
         print(output_formatter(n_val, m_val, result))
 
 
